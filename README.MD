@@ -9,6 +9,7 @@ TL;DR : Scraping a website from domain + artist and retrieve all his lyrics. The
  - Generate the lyrics from the model
  
  ## Acknowledgments
- - https://www.youtube.com/watch?v=dT1aKuUsKUE
- - https://www.youtube.com/watch?v=HfGH28j2TbA
  - https://gitlab.com/random-dude for personal help and tips 😉
+ - https://www.youtube.com/watch?v=dT1aKuUsKUE (On code un générateur de texte ! (avec Python et des chaînes de Markov))
+ - https://www.youtube.com/watch?v=HfGH28j2TbA (Apprendre le Web Scraping avec Python Français)
+ - https://www.youtube.com/watch?v=hHgY40rRGQg (Web Scraping - Éviter la détection ! (Python))
