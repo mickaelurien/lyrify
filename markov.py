@@ -4,6 +4,7 @@ import re
 import yaml
 import sys
 import requests
+import markovify
 import pandas as pd
 from bs4 import BeautifulSoup
 from collections import defaultdict, Counter
@@ -24,11 +25,11 @@ def scrape_proxies():
     return select_good_proxies(https_proxies)
 
 # Get a list of proxies in params and return a good proxies array, checked by httpbin.org/ip
-def select_good_proxies(proxies, nb_needed=3):
+def select_good_proxies(proxies, nb_needed=15):
     url = "https://httpbin.org/ip"
     good_proxies = []
     headers = browser_headers["Chrome"] # Using Chrome headers, no reason to use another one
-
+    print("Searching for {} proxies...".format(nb_needed))
     for proxy_url in proxies["url"]: # For each proxy in the list
         proxies = {
             "http": proxy_url,
@@ -38,7 +39,7 @@ def select_good_proxies(proxies, nb_needed=3):
         try: # We make a request to httpbin.org/ip and see the response
             response = requests.get(url, headers=headers, proxies=proxies, timeout=2)
             good_proxies.append(proxy_url)
-            # print("Good proxy: {}".format(proxy_url))
+            print("{}/{} - Good proxy: {}".format(len(good_proxies), nb_needed, proxy_url))
         except Exception:
             pass
             
@@ -61,11 +62,11 @@ def scrape_text(domain = 'https://www.azlyrics.com', artist = 'damso'):
         items = soup.find_all('div', class_='listalbum-item')
         links = [domain+item.find('a').get('href') for item in items] # Get all the links to the songs
         # print(links)
-        nb_links = len(links) if len(links) < 30 else 30 # We don't want to scrappe too much songs, so we limit to 30
-        cnt = 0
-        lyrics = ''
+        nb_links = len(links) if len(links) < 200 else 200 # We don't want to scrappe too much songs, so we limit 
+        cnt = 1
+        # lyrics = ''
         for link in links: # For each song
-            if cnt < nb_links: 
+            if cnt <= nb_links: 
                 print('scraping link {}/{}'.format(cnt, nb_links))
                 browser, headers = random.choice(list(browser_headers.items())) # Get a random header from headers.yml
                 print(f"\n Using {browser} headers \n")
@@ -78,14 +79,16 @@ def scrape_text(domain = 'https://www.azlyrics.com', artist = 'damso'):
                     response = requests.get(link, headers=headers, proxies=proxies, timeout=2)
                     soup = BeautifulSoup(response.text, 'html.parser')
                     main_div = soup.find('div', class_='ringtone').find_next_sibling('div') # Target the div with the lyrics
-                    lyrics += main_div.text
+                    lyrics = main_div.text
                     cnt += 1 # Increment the counter if all went well
-                    print(lyrics)  
+                    print(lyrics)
+                    with open(f'texts/{artist}.txt', 'a+', encoding="utf-8") as txt_file: # Save the lyrics in jsons/*artist_name*.json
+                        # json.dump(lyrics, json_file)
+                        txt_file.write(lyrics) 
                 except Exception:
                     print(f"Proxy {proxy_url} failed")
         
-        with open(f'jsons/{artist}.json', 'w') as json_file: # Save the lyrics in jsons/*artist_name*.json
-            json.dump(lyrics, json_file) 
+                
 
 # Build the markov model, return a dictionary with the state as key and the next state with the probability as value
 # e.g : { "hello" : {"w" : 1} }
@@ -124,12 +127,36 @@ def generate_text(markov_model, speech_size=600):
     print(''.join(speech))
 
 
-
-
 scrape_text()
-damso_text = json.load(open('jsons/damso.json'))
-model = build_markov_model(damso_text, state_size=8)
+# damso_text = json.load(open('jsons/damso.json', 'r'))
+with open('./texts/damso.txt', 'r') as f:
+    damso_text =  f.readlines()
 
-# json.dump(model, open("./jsons/model.json", "w"))
-print('-------------------------------------------------------')
-generate_text(model)
+
+# Use our markov model 
+# model = build_markov_model(damso_text, state_size=8)
+# print('-------------------------------------------------------')
+# generate_text(model)
+
+# Use the markovify library
+damso_model = markovify.Text(damso_text, state_size=3)
+
+# print('------------------------- FINAL -----------------------------\n')
+# # print('Titre : ', damso_model.make_short_sentence(20) + ' - Damso')
+
+# def generate_lyrics():
+#     nb_couplet = 3
+#     lyrics = ''
+#     while nb_couplet > 0:
+#         couplet = ''
+#         nb_lines = 4
+#         while nb_lines > 0:
+#             line = damso_model.make_short_sentence(2000)
+#             if (line):
+#                 couplet += line + '\n'
+#                 nb_lines -= 1
+#         lyrics += '\n' + couplet + '\n'
+#         nb_couplet -= 1
+#     return lyrics
+
+# print(generate_lyrics())
