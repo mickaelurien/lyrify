@@ -1,5 +1,6 @@
 import json
 import random 
+import re
 import sys
 import requests
 from bs4 import BeautifulSoup
@@ -9,31 +10,44 @@ from collections import defaultdict, Counter
 # Take an url in parameter and return the lyrics of the artist
 def scrape_text(domain = 'https://www.azlyrics.com', artist = 'damso'): 
     artist_url = '/' + artist[0] + '/' + artist + '.html' # if artist is damso, the url will be /d/damso.html
-    url = 'https://paroles2chansons.lemonde.fr/paroles-damso'
+    url = domain + artist_url
+    print(url)
     response = requests.get(url)
     text = []
     if response.ok: 
         soup = BeautifulSoup(response.text, 'html.parser')
-        listalbum_items = soup.find_all('div', class_='info-item') 
-        links = [domain+item.find('a')['href'] for item in listalbum_items]
+        items = soup.find_all('div', class_='listalbum-item')
+        links = [domain+item.find('a').get('href') for item in items]
+        print(links)
         nb_links = len(links) if len(links) < 30 else 30
         cnt = 0
         for link in links:
-            if cnt < 30: 
+            if cnt < 1: 
                 cnt += 1
                 print('scraping link {}/{}'.format(cnt, nb_links))
                 response = requests.get(link)
-                print(link)
-                print(response)
                 if response.ok:
                     soup = BeautifulSoup(response.text, 'html.parser')
-                    lyrics = soup.find_all('div', class_='block-spacing-medium')
-                    print(lyrics)
-                    text.append(lyrics)
+                    lyrics_parent = soup.find('div', class_='ringtone').find_next_sibling('div')
+                    test = [item.text for item in lyrics_parent]
+                    lyrics = []
+                    print(test)
+                    # for lyrics_node in lyrics_parent:
+                    #     textParsed = re.sub("[\(\[].*?[\)\]]", "", lyrics_node.text)
+                    #     lyrics.append(textParsed)
+                    #     print(lyrics_node)
+                    # # print(lyrics)
+
+                    # jsonContent = json.dumps(lyrics)
+                    # with open('./jsons/damso.json', 'w') as f:
+                    #     f.write(jsonContent)
+                    #     json.dump(jsonContent, f, indent=4)
+                    # text.append(lyrics)
+        
         return text
 
-# result = scrape_text()
-# print(result)
+result = scrape_text()
+print(result)
 
 # Build the markov model, return a dictionary with the state as key and the next state with the probability as value
 
