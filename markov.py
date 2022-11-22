@@ -51,7 +51,7 @@ def select_good_proxies(proxies, nb_needed=15):
 
 # Scrape the artist page to get all the songs
 # Then use our proxy/headers protection to scrappe all lyrics from the songs and save them in jsons/*artist_name*.json
-def scrape_text(domain = 'https://www.azlyrics.com', artist = 'damso'):
+def scrape_text(artist, domain = 'https://www.azlyrics.com'):
     good_proxies = scrape_proxies() 
         
     artist_url = '/' + artist[0] + '/' + artist + '.html' # if artist is damso, the url will be /d/damso.html
@@ -67,27 +67,35 @@ def scrape_text(domain = 'https://www.azlyrics.com', artist = 'damso'):
         # lyrics = ''
         for link in links: # For each song
             if cnt <= nb_links: 
-                print('scraping link {}/{}'.format(cnt, nb_links))
-                browser, headers = random.choice(list(browser_headers.items())) # Get a random header from headers.yml
-                print(f"\n Using {browser} headers \n")
-                proxy_url = random.choice(good_proxies) # Get a random proxy from the good proxies list
-                proxies = proxies = {
-                    "http": proxy_url,
-                    "https": proxy_url
-                }
-                try: 
-                    response = requests.get(link, headers=headers, proxies=proxies, timeout=2)
-                    soup = BeautifulSoup(response.text, 'html.parser')
-                    main_div = soup.find('div', class_='ringtone').find_next_sibling('div') # Target the div with the lyrics
-                    lyrics = main_div.text
-                    cnt += 1 # Increment the counter if all went well
-                    print(lyrics)
-                    with open(f'texts/{artist}.txt', 'a+', encoding="utf-8") as txt_file: # Save the lyrics in jsons/*artist_name*.json
-                        # json.dump(lyrics, json_file)
-                        txt_file.write(lyrics) 
-                except Exception:
-                    print(f"Proxy {proxy_url} failed")
-        
+                while True: 
+                    print('scraping link {}/{}'.format(cnt, nb_links))
+                    print(link)
+                    try: 
+                        proxy_url = random.choice(good_proxies) # Get a random proxy from the good proxies list
+                        proxies = proxies = {
+                            "http": proxy_url,
+                            "https": proxy_url
+                        }
+                        browser, headers = random.choice(list(browser_headers.items())) # Get a random header from headers.yml
+                        print(f"\n Using {browser} headers \n")
+                        response = requests.get(link, headers=headers, proxies=proxies, timeout=2)
+                        soup = BeautifulSoup(response.text, 'html.parser')
+                        main_div = soup.find('div', class_='ringtone').find_next_sibling('div') # Target the div with the lyrics
+                        lyrics = main_div.text
+                        print(lyrics)
+                        with open(f'texts/{artist}.txt', 'a+', encoding="utf-8") as txt_file: # Save the lyrics in jsons/*artist_name*.json
+                            # json.dump(lyrics, json_file)
+                            txt_file.write(lyrics)
+                        cnt += 1 # Increment the counter if all went well
+                        break
+                    except Exception:
+                        print(f"Proxy {proxy_url} failed")
+                        if len(good_proxies) > 1:
+                            good_proxies.remove(proxy_url) # Remove the proxy from the good proxies list if it failed
+                            print(f"Good proxies left : {good_proxies}")
+                        else: 
+                            print("No more proxies left, exiting")
+                            break
                 
 
 # Build the markov model, return a dictionary with the state as key and the next state with the probability as value
@@ -126,11 +134,26 @@ def generate_text(markov_model, speech_size=600):
             this_state = this_state[:1] + speech[-1]
     print(''.join(speech))
 
+def generate_lyrics(model):
+    nb_couplet = 3
+    lyrics = ''
+    while nb_couplet > 0:
+        couplet = ''
+        nb_lines = 4
+        while nb_lines > 0:
+            line = model.make_short_sentence(2000)
+            if (line):
+                couplet += line + '\n'
+                nb_lines -= 1
+        lyrics += '\n' + couplet + '\n'
+        nb_couplet -= 1
+    return lyrics
 
-scrape_text()
-# damso_text = json.load(open('jsons/damso.json', 'r'))
-with open('./texts/damso.txt', 'r') as f:
-    damso_text =  f.readlines()
+artist = 'alphawann'
+scrape_text(artist)
+
+with open(f'./texts/{artist}.txt', 'r') as f:
+    lyrics =  f.readlines()
 
 
 # Use our markov model 
@@ -139,24 +162,10 @@ with open('./texts/damso.txt', 'r') as f:
 # generate_text(model)
 
 # Use the markovify library
-damso_model = markovify.Text(damso_text, state_size=3)
+model = markovify.Text(lyrics, state_size=3)
 
 # print('------------------------- FINAL -----------------------------\n')
-# # print('Titre : ', damso_model.make_short_sentence(20) + ' - Damso')
 
-# def generate_lyrics():
-#     nb_couplet = 3
-#     lyrics = ''
-#     while nb_couplet > 0:
-#         couplet = ''
-#         nb_lines = 4
-#         while nb_lines > 0:
-#             line = damso_model.make_short_sentence(2000)
-#             if (line):
-#                 couplet += line + '\n'
-#                 nb_lines -= 1
-#         lyrics += '\n' + couplet + '\n'
-#         nb_couplet -= 1
-#     return lyrics
 
-# print(generate_lyrics())
+
+print(generate_lyrics(model))
