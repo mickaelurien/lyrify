@@ -6,6 +6,6 @@
 <div>
     <Wrapper>
         <h1>Génération en cours</h1>
+        <button on:click={() => $step++}>click</button>
     </Wrapper>
-    <button on:click={() => $step++}>click</button>
 </div>

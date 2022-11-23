@@ -4,6 +4,7 @@
   import Artists from './lib/Artists.svelte';
   import Loading from './lib/Loading.svelte';
   import Generated from './lib/Generated.svelte';
+  import Footer from './lib/Footer.svelte';
 
   $: verifyStep($step);
 
@@ -27,7 +28,16 @@
     <Generated />
   {/if}
 </main>
+<Footer />
 
 <style>
-  
+  main {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+  }
+  :global(main > *) {
+    grid-column: 1;
+    grid-row: 1;
+  }
 </style>

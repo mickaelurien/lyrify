@@ -13,10 +13,6 @@
         </p>
 
         <button on:click|once={() => $step++}>Commencer</button>
-
-        <div class="contacts">
-            <a href="https://github.com/mickaelurien/lyrify" rel="noreferrer" target="_blank">Github</a> - <a href="https://mickaelurien.fr" rel="noreferrer" target="_blank">Site perso</a>
-        </div>
     </Wrapper>
 </div>
 
