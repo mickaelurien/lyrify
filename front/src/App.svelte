@@ -1,17 +1,20 @@
 <script>
-  import { step, artist_choose } from './store.js';
+  import { step, artist_choose, lyrics } from './store.js';
   import Welcome from './lib/Welcome.svelte';
   import Artists from './lib/Artists.svelte';
   import Loading from './lib/Loading.svelte';
   import Generated from './lib/Generated.svelte';
   import Footer from './lib/Footer.svelte';
 
-  $: verifyStep($step);
+  $: $step, verifyStep();
 
-  function verifyStep(step) {
-    if (step === 2) {
-      // TODO : Request python api with artist_choose and set result in $lyrics
-      // $step = 3;
+  async function verifyStep() {
+    if ($step === 2) {
+      const response = await fetch(`http://localhost:8000/api/${$artist_choose}`);
+      $lyrics = await response.json();
+      $lyrics.replaceAll('\n', '<br>');
+      console.log({$lyrics})
+      $step++;
     }
   }
 </script>

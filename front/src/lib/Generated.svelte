@@ -8,12 +8,7 @@
         <h1>Génération terminée</h1>
 
         <div class="lyrics-container">
-            <p>
-                {$lyrics}
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum officia saepe quidem quasi cum sunt necessitatibus, dolorum dolores vel, cumque deleniti.
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum officia saepe quidem quasi cum sunt necessitatibus, dolorum dolores vel, cumque deleniti.
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum officia saepe quidem quasi cum sunt necessitatibus, dolorum dolores vel, cumque deleniti.
-            </p>
+            {@html $lyrics}
         </div>
 
         <button on:click|once={() => $step = 0}>Recommencer</button>
@@ -25,8 +20,5 @@
         margin: 2.5em;
         border: 2px solid white;
         padding: 1em;
-    }
-    .lyrics-container > * {
-        text-align: left;
     }
 </style>

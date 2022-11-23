@@ -48,4 +48,4 @@ def generate_lyrics(artist):
         nb_couplet -= 1
     return lyrics
 
-print(generate_lyrics('booba'))
+# print(generate_lyrics('booba'))
