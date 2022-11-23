@@ -9,10 +9,10 @@ import pandas as pd
 from bs4 import BeautifulSoup
 from collections import defaultdict, Counter
 
-with open('headers.yml') as f_headers:
+with open('./src/headers.yml') as f_headers:
     browser_headers = yaml.safe_load(f_headers)
 
-with open('user_agents.yml') as f_user_agents:
+with open('./src/user_agents.yml') as f_user_agents:
     user_agents = yaml.safe_load(f_user_agents)
 
 # Scrape a list of proxies from https://free-proxy-list.net/

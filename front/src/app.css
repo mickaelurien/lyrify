@@ -1,0 +1,53 @@
+:root {
+  --blue: #2C497F;
+  --light-blue: #00A6FB;
+  font-family: Inter, sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  background-color: var(--blue);
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+
+
+} 
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+  color: white;
+}
+
+h1 {
+  font-weight: 500;
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+button {
+  border-radius: 10px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  margin: 1em 0;
+  font-size: 1em;
+  text-transform: uppercase;
+  font-weight: 500;
+  background-color: var(--light-blue);
+  color: white;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
