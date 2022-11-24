@@ -8,6 +8,18 @@
         },
         {
             name : 'Pnl', slug: 'pnl', img: 'pnl.jpg'
+        },
+        {
+            name : 'Alpha Wann', slug: 'alphawann', img: 'alphawann.jpg'
+        },
+        {
+            name : 'Booba', slug: 'booba', img: 'booba.jpg'
+        },
+        {
+            name : 'Angèle', slug: 'angle', img: 'angele.png'
+        },
+        {
+            name : 'Orelsan', slug: 'orelsan', img: 'orelsan.jpg'
         }
     ]
 

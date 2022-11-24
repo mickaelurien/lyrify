@@ -93,5 +93,4 @@ def scrape_text(artist, domain = 'https://www.azlyrics.com'):
                             print("No more proxies left, exiting")
                             exit()
                 
-
-scrape_text('booba');
+scrape_text('orelsan');

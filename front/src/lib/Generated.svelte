@@ -8,7 +8,7 @@
         <h1>Génération terminée</h1>
 
         <div class="lyrics-container">
-            {@html $lyrics}
+            {$lyrics}
         </div>
 
         <button on:click|once={() => $step = 0}>Recommencer</button>
@@ -20,5 +20,6 @@
         margin: 2.5em;
         border: 2px solid white;
         padding: 1em;
+        white-space: pre-line;
     }
 </style>
