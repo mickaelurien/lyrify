@@ -30,7 +30,6 @@
 
 ## How To Use
 
-
 ```bash
 # Clone this repository
 $ git clone https://github.com/mickaelurien/lyrify.git
@@ -45,10 +44,10 @@ $ npm install
 $ npm run dev
 ```
 
-```
+```bash
 # Run the API
 $ cd back/
-$ uvicorn api:app --reload
+$ ./run.sh
 ```
 
 ## Acknowledgments
