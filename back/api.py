@@ -1,12 +1,16 @@
+import os
 from typing import Union
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 import markov
 
+from dotenv import load_dotenv
+load_dotenv()
+
 app = FastAPI()
 
-origins = ['http://127.0.0.1:5173']
+origins = [os.environ.get('FRONT_URL')]
 
 app.add_middleware(
     CORSMiddleware,
