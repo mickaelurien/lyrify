@@ -23,7 +23,7 @@
         }
     ]
 
-    const getArtistImg = (img) => `/artists/${img}`;
+    const getArtistImg = (img) => `../../public/artists/${img}`;
 </script>
 
 <div>

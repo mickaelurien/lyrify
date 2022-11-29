@@ -1,3 +1,4 @@
+import uvicorn
 import os
 from typing import Union
 from fastapi import FastAPI
@@ -9,6 +10,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = FastAPI()
+
+uvicorn.run(app, host="0.0.0.0", port=os.environ.get('ALLOCATED_PORT'))
 
 origins = [os.environ.get('FRONT_URL')]
 
