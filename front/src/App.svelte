@@ -8,9 +8,10 @@
 
   $: $step, verifyStep();
 
+
   async function verifyStep() {
     if ($step === 2) {
-      const response = await fetch(`http://localhost:8000/api/${$artist_choose}`);
+      const response = await fetch(import.meta.env.VITE_API_URL + `${$artist_choose}`);
       $lyrics = await response.json();
       $lyrics.replaceAll('\n', '<br>');
       console.log({$lyrics})

@@ -23,7 +23,7 @@
         }
     ]
 
-    const getArtistImg = (img) => `/src/assets/artists/${img}`;
+    const getArtistImg = (img) => `/artists/${img}`;
 </script>
 
 <div>
