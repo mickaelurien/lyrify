@@ -17,5 +17,11 @@
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+    overflow: hidden;   
+}
+@media screen and (max-width: 1098px) {
+    .wrapper {
+        min-width: 90vw;
+    }
 }
 </style>

@@ -14,8 +14,6 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
-
-
 } 
 
 body {
@@ -25,12 +23,25 @@ body {
   min-width: 320px;
   min-height: 100vh;
   color: white;
+  overflow: hidden;
 }
 
 h1 {
   font-weight: 500;
   font-size: 3.2em;
   line-height: 1.1;
+}
+
+@media screen and (max-width: 768px) {
+  h1 {
+    font-size: 2.4em;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  h1 {
+    font-size: 1.8em;
+  }
 }
 
 button {

@@ -87,4 +87,29 @@
         opacity: 0.5;
         pointer-events: none;
     }
+
+    @media screen and (max-width: 768px) {
+        .artists-container {
+            margin: 0 1em;
+        }
+        .artist {
+            margin: 0 1em;
+        }
+        .artist > .img-wrapper {
+            height: 120px;
+            width: 120px;
+        }
+    }
+    @media screen and (max-width: 400px) {
+        .artist {
+            margin: 0 0.5em;
+        }
+        .artist > p {
+            margin-top: 8px;
+        }
+        .artist > .img-wrapper {
+            height: 80px;
+            width: 80px;
+        }
+    }
 </style>

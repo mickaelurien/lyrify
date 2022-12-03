@@ -8,7 +8,6 @@
 
   $: $step, verifyStep();
 
-
   async function verifyStep() {
     if ($step === 2) {
       const response = await fetch(import.meta.env.VITE_API_URL + `${$artist_choose}`);

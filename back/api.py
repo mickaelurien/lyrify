@@ -11,8 +11,7 @@ load_dotenv()
 
 app = FastAPI()
 
-# origins = [os.environ.get('FRONT_URL')]
-origins = ['https://mickaelurien.fr/']
+origins = [os.environ.get('FRONT_URL')]
 
 app.add_middleware(
     CORSMiddleware,

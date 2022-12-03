@@ -22,4 +22,12 @@
         padding: 1em;
         white-space: pre-line;
     }
+
+    @media screen and (max-width: 768px) {
+        .lyrics-container {
+            margin: 0;
+            padding: 0 0.5em;
+            line-height: 1.2;
+        }
+    }
 </style>

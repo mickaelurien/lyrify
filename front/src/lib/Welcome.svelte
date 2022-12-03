@@ -17,7 +17,7 @@
 </div>
 
 <style>
-    p {
+    h1, p {
         text-align: center;
     }
 </style>
