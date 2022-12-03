@@ -11,7 +11,8 @@ load_dotenv()
 
 app = FastAPI()
 
-# uvicorn.run(app, host="0.0.0.0", port=os.environ.get('ALLOCATED_PORT'))
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=os.environ.get('ALLOCATED_PORT'))
 
 origins = [os.environ.get('FRONT_URL')]
 
@@ -22,6 +23,11 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+@app.get("/api")
+def get_lyrics_by_artist():
+    return 'Hello World'
 
 @app.get("/api/{artist}")
 def get_lyrics_by_artist(artist: str):
