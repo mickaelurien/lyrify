@@ -47,7 +47,12 @@ $ npm run dev
 ```bash
 # Run the API
 $ cd back/
-$ ./run.sh
+
+# Install dependencies
+$ pip install -r requirements.txt
+
+# Run the app
+$ python api.py
 ```
 
 ## Acknowledgments

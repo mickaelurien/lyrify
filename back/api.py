@@ -11,7 +11,8 @@ load_dotenv()
 
 app = FastAPI()
 
-origins = [os.environ.get('FRONT_URL')]
+# origins = [os.environ.get('FRONT_URL')]
+origins = ['https://mickaelurien.fr/']
 
 app.add_middleware(
     CORSMiddleware,
@@ -22,7 +23,7 @@ app.add_middleware(
 )
 
 
-@app.get("/api")
+@app.get("/")
 def get_lyrics_by_artist():
     return 'Hello World'
 
