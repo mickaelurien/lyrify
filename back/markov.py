@@ -1,8 +1,5 @@
 import json
 import random
-# import re
-# import sys
-# import requests
 import markovify
 
 def generate_lyrics(artist):

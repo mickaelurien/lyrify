@@ -1,0 +1,5 @@
+uvicorn[standard]
+markovify
+requests
+fastapi
+python-dotenv
