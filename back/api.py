@@ -11,9 +11,6 @@ load_dotenv()
 
 app = FastAPI()
 
-if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=os.environ.get('ALLOCATED_PORT'))
-
 origins = [os.environ.get('FRONT_URL')]
 
 app.add_middleware(
