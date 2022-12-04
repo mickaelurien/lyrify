@@ -15,9 +15,9 @@
         {
             name : 'Booba', slug: 'booba', img: 'booba.jpg'
         },
-        {
-            name : 'Angèle', slug: 'angle', img: 'angele.png'
-        },
+        // {
+        //     name : 'Angèle', slug: 'angle', img: 'angele.png'
+        // },
         {
             name : 'Orelsan', slug: 'orelsan', img: 'orelsan.jpg'
         }
